@@ -40,7 +40,7 @@ public class FileStorageService {
 		boolean isValid = true;
 		String line;
 		BufferedReader br;
-		InputStream is;
+		InputStream is = null;
 		if (file != null) {
 			try {
 				is = file.getInputStream();
@@ -108,6 +108,15 @@ public class FileStorageService {
 
 			} catch (IOException e) {
 				logger.error("File open error");
+			}
+			finally {
+				if(is != null)
+					try {
+						is.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						System.out.println("Failed to close the file");
+					}
 			}
 		} else {
 			logger.error("Empty file");
